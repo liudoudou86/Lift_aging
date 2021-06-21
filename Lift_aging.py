@@ -17,10 +17,10 @@ def up():
     ser.write('@21N#\r\n'.encode()) # 上升摄像机
     time.sleep(3)
     ser.write('@22N#\r\n'.encode()) # 打开电机
-    logger.debug("上升摄像机")
+    logger.debug("上升摄像机，打开电机")
     while True:
         line = ser.read(ser.in_waiting).decode("utf-8") # 读取缓冲区的指令
-        # logger.debug(line)
+        logger.debug(line) # 打印读取的串口信息
         if (re.search('@51N#', line)): # 从接收的信息中查找
             ser.write('@22F#\r\n'.encode()) # 关闭电机
             logger.debug("检测到上光耦，关闭电机")
@@ -36,10 +36,10 @@ def down():
     ser.write('@21F#\r\n'.encode()) # 下降摄像机
     time.sleep(3)
     ser.write('@22N#\r\n'.encode()) # 打开电机
-    logger.debug("下降摄像机")
+    logger.debug("下降摄像机，打开电机")
     while True:
         line = ser.read(ser.in_waiting).decode("utf-8") # 读取缓冲区的指令
-        # logger.debug(line)
+        logger.debug(line) # 打印读取的串口信息
         if (re.search('@52N#',line)): # 从接收的信息中查找
             ser.write('@22F#\r\n'.encode()) # 关闭电机
             logger.debug("检测到下光耦，关闭电机")
@@ -63,9 +63,9 @@ cur_time=time.strftime(format_time,time_tup)
  
 if __name__ == '__main__':
 
-    logger.add('log_{}.txt'.format(cur_time), rotation="10 MB") # 将日志输出到txt文本中
+    logger.add('log_{}.txt'.format(cur_time), rotation="100 MB") # 将日志输出到txt文本中
     count = 0
-    for i in range (0, 1): # 对函数做循环
+    for i in range (0, 200): # 对函数做循环
         up()
         time.sleep(3) # 升降机转向需要3秒缓冲
         down()
