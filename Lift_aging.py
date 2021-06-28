@@ -58,7 +58,7 @@ def test():
     ser.close()
 
 time_tup=time.localtime(time.time()) # 获取当前时间
-format_time="%Y-%m-%d_%H%M%S"
+format_time="%Y-%m-%d_%H-%M-%S"
 cur_time=time.strftime(format_time,time_tup)
  
 if __name__ == '__main__':
